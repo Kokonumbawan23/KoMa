@@ -21,7 +21,7 @@ module.exports = {
       role: {
         type: Sequelize.INTEGER,
         references: {
-          models: 'roles',
+          model: 'roles',
           key: 'id',
         },
       height: Sequelize.INTEGER,

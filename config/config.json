@@ -3,7 +3,7 @@
     "username": "root",
     "password": "root",
     "database": "koma",
-    "host": "192.168.3.3",
+    "host": "34.101.53.220",
     "dialect": "mysql"
   },
   "test": {
