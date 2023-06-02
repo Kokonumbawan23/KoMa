@@ -28,7 +28,9 @@ module.exports = {
           model: 'users',
           key: 'id',
         }
-      }
+      },
+      createdAt: Sequelize.DATE,
+    updatedAt: Sequelize.DATE,
     })
   },
 

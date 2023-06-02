@@ -9,23 +9,28 @@ module.exports = {
      * Example:
      * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
      */
-    await queryInterface.createTable('resetPasswords', {
-      id: {
-        type: Sequelize.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
+    await queryInterface.createTable('tags', { id: {
+      type: Sequelize.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+    recipe: {
+      type: Sequelize.INTEGER,
+      references: {
+        model: 'recipes',
+        key: 'id',
       },
-      otp: Sequelize.STRING,
-      id_user: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'users',
-          key: 'id'
-        }
+    },
+    ingredients: {
+      type: Sequelize.INTEGER,
+      references: {
+        model: 'ingredients',
+        key: 'id',
       },
-      createdAt: Sequelize.DATE,
+    },
+    createdAt: Sequelize.DATE,
     updatedAt: Sequelize.DATE,
-    });
+  });
   },
 
   async down (queryInterface, Sequelize) {
@@ -35,6 +40,6 @@ module.exports = {
      * Example:
      * await queryInterface.dropTable('users');
      */
-    await queryInterface.dropTable('resetPasswords');
+    await queryInterface.dropTable('tags');
   }
 };

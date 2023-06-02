@@ -18,20 +18,21 @@ module.exports = {
       fullName: Sequelize.STRING,
       email : Sequelize.STRING,
       password : Sequelize.STRING,
-      role: {
-        type: Sequelize.INTEGER,
-        references: {
-          models: 'roles',
-          key: 'id',
-        },
+      // role: {
+      //   type: Sequelize.INTEGER,
+      //   references: {
+      //     model: 'roles',
+      //     key: 'id',
+      //   },
+      // },
       height: Sequelize.INTEGER,
       weight: Sequelize.INTEGER,
       calories: Sequelize.INTEGER,
       photoProfile: Sequelize.STRING,
       phoneNumber: Sequelize.STRING,
-      created_at : Sequelize.DATE,
-      updated_at : Sequelize.DATE
-      }
+      createdAt: Sequelize.DATE,
+    updatedAt: Sequelize.DATE,
+
     });
 
   },

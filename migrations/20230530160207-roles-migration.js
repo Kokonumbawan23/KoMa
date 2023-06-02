@@ -16,6 +16,8 @@ module.exports = {
         autoIncrement: true,
       },
       name: Sequelize.STRING,
+      createdAt: Sequelize.DATE,
+    updatedAt: Sequelize.DATE,
     });
   },
 
