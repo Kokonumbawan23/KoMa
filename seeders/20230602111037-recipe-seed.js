@@ -19,8 +19,8 @@ module.exports = {
       method: 'GET',
       url: 'https://low-carb-recipes.p.rapidapi.com/search',
       params: {
-        name: 'pepper',
-        limit: '10'
+        Includeingredients: 'Soy-beans',
+        limit: '15'
       },
       headers: {
         'X-RapidAPI-Key': 'adc4706ae6mshf201f695d90122dp1da984jsneafb235685af',
@@ -29,7 +29,6 @@ module.exports = {
     };
     
     try {
-      const arr = [];
       const response = await axios.request(options);
       const data = response.data;
       console.log(data.length);
@@ -38,26 +37,21 @@ module.exports = {
         const ingredients = data[i].ingredients;
         for(let j = 0; j < ingredients.length; j++){
           let name = ingredients[j].name
-          // console.log(name);
-          if(!await Ingredient.findOne({
+          if(await Ingredient.findOne({
             where: {
               name,
             }
-          })){
-            arr.push({
+          }) === null){
+            console.log(name);
+            await queryInterface.bulkInsert('ingredients',
+            [{
               name,
-              createdAt: Date.now(),
-              updatedAt: Date.now(),
-
-            });
+              createdAt: new Date,
+              updatedAt: new Date
+            }]);
           }
         }
       }
-
-      console.log(arr);
-
-      await queryInterface.bulkInsert('ingredients',
-      arr);
      
     } catch (error) {
       console.error(error);
