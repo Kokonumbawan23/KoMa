@@ -43,7 +43,7 @@ function createModelTag(Sequelize, DataTypes) {
         allowNull: false,
       },
       qty: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.DOUBLE,
         allowNull: false,
       },
       createdAt: {

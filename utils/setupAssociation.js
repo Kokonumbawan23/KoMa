@@ -15,6 +15,15 @@ function createAssociation(sequelize) {
   User.belongsToMany(Recipe, { through: Bookmark });
   Recipe.belongsToMany(User, { through: Bookmark });
 
+  //   Recipe.hasMany(Tag, {
+  //     foreignKey: "id_recipe",
+  //     targetKey: "id",
+  //   });
+  //   Ingredient.hasMany(Tag, {
+  //     foreignKey: "id_ingredient",
+  //     targetKey: "id",
+  //   });
+
   Recipe.belongsToMany(Ingredient, {
     through: Tag,
     as: "Ingredients",
@@ -25,15 +34,29 @@ function createAssociation(sequelize) {
     as: "Recipes",
     foreignKey: "id_ingredient",
   });
+  Unit.belongsToMany(Ingredient, {
+    through: Tag,
+    foreignKey: "id_unit",
+    //as:"units",
+  });
+  Ingredient.belongsToMany(Unit, {
+    through: Tag,
+    as: "Unit",
+    foreignKey: "id_ingredient",
+  });
 
-  //   Recipe.hasMany(Tag, {
-  //     foreignKey: "id_recipe",
-  //     targetKey: "id",
-  //   });
-  //   Ingredient.hasMany(Tag, {
-  //     foreignKey: "id_ingredient",
-  //     targetKey: "id",
-  //   });
+  Recipe.hasMany(Tag, {
+    foreignKey: "id_recipe",
+    sourceKey: "id",
+  });
+  Ingredient.hasMany(Tag, {
+    foreignKey: "id_ingredient",
+    sourceKey: "id",
+  });
+  Unit.hasMany(Tag, {
+    foreignKey: "id_unit",
+    sourceKey: "id",
+  });
 
   Tag.belongsTo(Recipe, {
     foreignKey: "id_recipe",
@@ -45,15 +68,21 @@ function createAssociation(sequelize) {
     sourceKey: "id",
   });
 
-  Unit.hasMany(Tag, {
-    foreignKey: "id_unit",
-    sourceKey: "id",
-  });
-
   Tag.belongsTo(Unit, {
     foreignKey: "id_unit",
     targetKey: "id",
   });
+
+  Recipe.belongsToMany(Unit, {
+    through: Tag,
+    foreignKey: "id_recipe",
+    as:"Unit"
+  });
+  Unit.belongsToMany(Recipe, {
+    through: Tag,
+    foreignKey: "id_unit",
+    as:"unitRecipe"
+  })
 }
 
 module.exports = createAssociation;

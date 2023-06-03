@@ -9,7 +9,7 @@ function createModelUnit(Sequelize, DataTypes) {
         allowNull: false,
       },
       name: {
-        type: DataTypes.STRING,
+        type: DataTypes.CITEXT,
         allowNull: false,
       },
       createdAt: {

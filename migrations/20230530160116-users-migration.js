@@ -16,6 +16,12 @@ module.exports = {
         autoIncrement: true,
         allowNull: false,
       },
+      uuid: {
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
+        allowNull: false,
+        unique: true,
+      },
       fullName: {
         type: Sequelize.STRING,
         allowNull: false,
@@ -23,6 +29,7 @@ module.exports = {
       email: {
         type: Sequelize.STRING,
         allowNull: false,
+        unique: true,
       },
       password: {
         type: Sequelize.STRING,

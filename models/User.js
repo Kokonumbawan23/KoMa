@@ -8,6 +8,12 @@ function createModelUser(Sequelize, DataTypes) {
         autoIncrement: true,
         allowNull: false,
       },
+      uuid: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        allowNull: false,
+        unique: true,
+      },
       fullName: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -15,6 +21,7 @@ function createModelUser(Sequelize, DataTypes) {
       email: {
         type: DataTypes.STRING,
         allowNull: false,
+        unique: true,
       },
       password: {
         type: DataTypes.STRING,

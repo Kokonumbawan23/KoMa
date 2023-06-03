@@ -1,62 +1,136 @@
-const { Ingredient, Recipe, Tag } = require("../../models");
+const { Ingredient, Recipe, Tag, Unit } = require("../../models");
 const { Op } = require("sequelize");
 
 module.exports = {
   handlerGetData: async (req, res, next) => {
     try {
-        const arrayIdRecipe = [];
+      const arrayIdRecipe = [];
       const { ingredient } = req.query;
       console.log(ingredient);
-    //   const dataIngredient = await Ingredient.findOne({
-    //     where: {
-    //       name: {
-    //         [Op.like]: `%${ingredient}%`,
-    //       },
-    //     },
-    //   });
-    //   if (!dataIngredient) {
-    //     throw new Error("Ingredient not found");
-    //   }
-    //   console.log("tes");
-        const tag = await Tag.findAll({
-          include: [
-            {
-              model: Ingredient,
-              where: {
-                name: {
-                  [Op.like]: `%${ingredient}%`,
-                },
-              },
-            },
-          ],
-        });
-      tag.map((value) => {
-        arrayIdRecipe.push(value.id_recipe);
-      });
-
-      const recipe = await Recipe.findAll({
-        limit: 2,
-        where: {
-            id: {
-                [Op.in]: arrayIdRecipe,
-            }
-        },
+      //   const dataIngredient = await Ingredient.findOne({
+      //     where: {
+      //       name: {
+      //         [Op.like]: `%${ingredient}%`,
+      //       },
+      //     },
+      //   });
+      //   if (!dataIngredient) {
+      //     throw new Error("Ingredient not found");
+      //   }
+      //   console.log("tes");
+      const tag = await Tag.findAll({
         include: [
           {
             model: Ingredient,
-            as: "Ingredients",
-            attributes: ["name"],
-            through: {
-              as: "Tags",
-              attributes: [],
+            where: {
+              name: {
+                [Op.like]: `%${ingredient}%`,
+              },
             },
           },
         ],
       });
 
+      tag.map((value) => {
+        arrayIdRecipe.push(value.id_recipe);
+      });
+
+      //   const recipe = await Recipe.findAll({
+      //     limit: 2,
+      //     where: {
+      //       id: {
+      //         [Op.in]: arrayIdRecipe,
+      //       },
+      //     },
+      //     include: [
+      //       {
+      //         model: Ingredient,
+      //         as: "Ingredients",
+      //         attributes: ["name"],
+
+      //         through: {
+      //           model: Tag,
+      //           as: "Size",
+      //           attributes: ["desc", "qty"],
+      //           //   through: {
+      //           //     model: Unit,
+      //           //     as: "Units",
+      //           //     attributes: ["name"],
+      //           //   },
+      //         },
+      //         include: [{
+      //             model: Unit,
+      //             as: "Unit",
+      //             attributes: ["name"],
+      //             through: {
+      //                 attributes: []
+      //             },
+
+      //         }]
+
+      //       },
+      //     //   {
+      //     //     model: Unit,
+      //     //     as: "Unit",
+      //     //     attributes: ["name"],
+      //     //     through: {},
+      //     //   },
+      //     ],
+      //   });
+
+      const recipe = await Recipe.findAll({
+        limit: 2,
+        where: {
+          id: {
+            [Op.in]: arrayIdRecipe,
+          },
+        },
+        include: [
+          {
+            model: Tag,
+            attributes: ["qty", "desc"],
+            include: [
+              {
+                model: Ingredient,
+                attributes: ["name"],
+              },
+              {
+                model: Unit,
+                attributes: ["name"],
+              },
+            ],
+          },
+        ],
+      });
+
+    //   const dataJson = recipe.map((value) => {
+    //     return value.toJSON();
+    //   });
+
+      const dataResult = recipe.map((value) => {
+        value.Tags = value.Tags.map((tag) => {
+          
+          return {
+            ingredient: tag.Ingredient.name,
+            unit: tag.Unit.name,
+            qty: tag.qty,
+            desc: tag.desc,
+            
+          };
+        });
+        return {
+            id:value.id,
+            title:value.title,
+            body:value.body,
+            instructions:value.instructions,
+            listIngredients: value.Tags,
+            createdAt: value.createdAt,
+            updatedAt:value.updatedAt,
+        };
+      });
       res.status(200).json({
         status: "success",
-        recipe: recipe,
+        recipe: dataResult,
       });
     } catch (error) {
       res.status(404).json({
