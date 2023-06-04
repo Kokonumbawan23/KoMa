@@ -20,6 +20,10 @@ function createModelRecipe(Sequelize, DataTypes) {
         type: DataTypes.TEXT,
         allowNull: false,
       },
+      images: {
+        type: DataTypes.ARRAY(DataTypes.TEXT),
+        allowNull: false,
+      },
       // listingredients: {
       //   type: DataTypes.ARRAY(DataTypes.JSONB),
       //   allowNull: false,

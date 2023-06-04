@@ -28,6 +28,10 @@ module.exports = {
         type: Sequelize.TEXT,
         allowNull: false,
       },
+      images: {
+        type: Sequelize.DataTypes.ARRAY(Sequelize.TEXT),
+        allowNull: true,
+      },
       // listingredients: {
       //   type: Sequelize.ARRAY(Sequelize.JSONB),
       //   allowNull: false,

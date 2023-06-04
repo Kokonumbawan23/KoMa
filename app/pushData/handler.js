@@ -1,6 +1,13 @@
 const fetch = (...args) =>
   import("node-fetch").then(({ default: fetch }) => fetch(...args));
 
+  
+
+const http = require("https");
+const { pipeline } = require('node:stream/promises');
+const axios = require('axios');
+// const uploadImage = require("../../utils/multer");
+// const { pushSingleImageToStorage } = require("../../utils/uploadToGCS");
 const { Recipe, Ingredient, Tag, Unit } = require("../../models");
 const ingredient = require("../../models/ingredient");
 const url = "https://low-carb-recipes.p.rapidapi.com";
@@ -8,7 +15,7 @@ const url = "https://low-carb-recipes.p.rapidapi.com";
 const options = {
   method: "GET",
   headers: {
-    "X-RapidAPI-Key": "050404b803msh7a974a0c65b3f74p19db88jsnca46213b9af8",
+    "X-RapidAPI-Key": process.env.APIKEY,
     "X-RapidAPI-Host": "low-carb-recipes.p.rapidapi.com",
   },
 };
@@ -25,12 +32,16 @@ const options = {
 //       'X-RapidAPI-Host': 'low-carb-recipes.p.rapidapi.com'
 //     }
 //   };
+// async function downloadImage(url) {
+//   const response = await axios.get(url, { responseType: 'arraybuffer' });
+//   return Buffer.from(response.data, 'binary');
+// }
 
 module.exports = {
   handlerGetData: async (req, res, next) => {
     try {
       const arr = [];
-      const arrayTag = [];
+
       const { tags, ingredient } = req.body;
       const names = tags ? `name=${tags}` : "";
       const include = ingredient
@@ -50,11 +61,24 @@ module.exports = {
         if (checkRecipe) {
           return;
         }
+
+        // const bufferImage = await downloadImage(element.image);    
+
+        // const uploadedtoGCS = await pushSingleImageToStorage(bufferImage);
+        // console.log("Upload: " +uploadedtoGCS);
+        // const imageArr = [uploadedtoGCS];
+        // console.log(element.image);
+
+
         const recipe = await Recipe.create({
           title: element.name,
           body: element.description,
           instructions: element.steps[0],
+          images: [element.image],
         });
+       
+
+
         console.log("RECIPE IN");
         element.ingredients.map(async (ingredient) => {
           console.log(`Bahan: ${ingredient.name}`);
@@ -97,7 +121,6 @@ module.exports = {
         //   });
         //   arrayTag.push(tagIn);
         // });
-        console.log(element);
         return element;
       });
 

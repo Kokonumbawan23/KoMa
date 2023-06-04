@@ -118,12 +118,14 @@ module.exports = {
             
           };
         });
+        console.log(value.images);
         return {
             id:value.id,
             title:value.title,
             body:value.body,
             instructions:value.instructions,
             listIngredients: value.Tags,
+            images: value.images,
             createdAt: value.createdAt,
             updatedAt:value.updatedAt,
         };
