@@ -59,7 +59,7 @@ module.exports = {
 
   handlerGetDataByIngredient: async (req, res, next) => {
     try {
-        const { ingredient } = req.body;
+        const { ingredient } = req.query;
 
         const data = await Recipe.findAll({
             include: [
