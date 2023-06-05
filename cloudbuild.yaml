@@ -19,5 +19,6 @@
    - 'gcr.io/$_PROJECT_ID/$_SERVICE_NAME:$COMMIT_SHA'
    - '--region'
    - '$_REGION'
+   - '--allow-unauthenticated'
  images:
  - 'gcr.io/$_PROJECT_ID/$_SERVICE_NAME:$COMMIT_SHA'
