@@ -1,4 +1,7 @@
  steps:
+ - name: node
+  entrypoint: npm
+  args: ['install']
  # Build the container image
  - name: 'gcr.io/cloud-builders/docker'
    args: ['build', '-t', 'gcr.io/$_PROJECT_ID/$_SERVICE_NAME:$COMMIT_SHA', '.']
