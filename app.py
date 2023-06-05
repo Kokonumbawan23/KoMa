@@ -12,7 +12,7 @@ app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
-model = tf.keras.models.load_model('./model/mobilenet 25 epochs.h5')
+model = tf.keras.models.load_model('./models/model.h5')
 
 listclass=['apple', 'banana', 'beetroot', 'bell pepper', 'cabbage', 'capsicum', 'carrot', 'cauliflower', 'chilli pepper', 'corn', 'cucumber', 'eggplant', 'garlic', 'ginger', 'grapes', 'jalepeno', 'kiwi', 'lemon', 'lettuce', 'mango', 'onion', 'orange', 'paprika', 'pear', 'peas', 'pineapple', 'pomegranate', 'potato', 'raddish', 'soy beans', 'spinach', 'sweetcorn', 'sweetpotato', 'tomato', 'turnip', 'watermelon']
 
@@ -26,7 +26,6 @@ def classify():
     if request.method == 'POST':
         # check if the post request has the file part
         if 'file' not in request.files:
-            flash('No file part')
             return {
                 "status" : "error",
                 "message" : 'No file part'
@@ -35,7 +34,6 @@ def classify():
         # If the user does not select a file, the browser submits an
         # empty file without a filename.
         if file.filename == '':
-            flash('No selected file')
             return {
                 "status" : "error",
                 "message" : 'No selected file'
