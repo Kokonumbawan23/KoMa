@@ -1,5 +1,6 @@
 FROM node:16
 WORKDIR /src/app
-COPY . .
+COPY package.json package-lock.json
 RUN "npm install"
-CMD ["npm", "start"]
+COPY . .
+CMD ["npm", "start"]
