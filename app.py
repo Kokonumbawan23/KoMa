@@ -6,8 +6,6 @@ import tensorflow as tf
 import numpy as np
 from google.cloud import storage
 from google.oauth2 import service_account
-import matplotlib.pyplot as plt
-import matplotlib.image as image
 
 # Setting up Google Cloud Credential
 credentials = service_account.Credentials.from_service_account_file('./credentials/capstone-koma-73d165c7c64e.json')
