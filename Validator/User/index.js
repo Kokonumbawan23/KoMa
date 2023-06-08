@@ -21,3 +21,5 @@ function validateNewUserSchema(payload) {
         throw new Error(validateResult.error.message);
     }
 }
+
+module.exports = { validateRegisterUserSchema, validateLoginUserSchema, validateNewUserSchema };
