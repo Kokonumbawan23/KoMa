@@ -44,6 +44,7 @@ module.exports = {
           body: dataJSON.body,
           instructions: dataJSON.instructions,
           images: dataJSON.images,
+          calories: dataJSON.calories,
           listIngredients: dataJSON.listIngredients,
           createdAt: dataJSON.createdAt,
           updatedAt: dataJSON.updatedAt,

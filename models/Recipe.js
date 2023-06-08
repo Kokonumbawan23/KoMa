@@ -24,6 +24,10 @@ function createModelRecipe(Sequelize, DataTypes) {
         type: DataTypes.ARRAY(DataTypes.TEXT),
         allowNull: false,
       },
+      calories: {
+        type: DataTypes.DOUBLE,
+        allowNull: false,
+      },
       // listingredients: {
       //   type: DataTypes.ARRAY(DataTypes.JSONB),
       //   allowNull: false,

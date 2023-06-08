@@ -32,6 +32,10 @@ module.exports = {
         type: Sequelize.DataTypes.ARRAY(Sequelize.TEXT),
         allowNull: true,
       },
+      calories: {
+        type: Sequelize.DOUBLE,
+        allowNull: false,
+      },
       // listingredients: {
       //   type: Sequelize.ARRAY(Sequelize.JSONB),
       //   allowNull: false,
