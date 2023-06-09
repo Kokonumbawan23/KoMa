@@ -51,10 +51,7 @@ module.exports = {
         },
       });
     } catch (error) {
-      res.status(400).json({
-        status: "failed",
-        message: error.message,
-      });
+      next(error);
     }
   },
 
@@ -79,7 +76,7 @@ module.exports = {
                     }
                 }
             ],
-            attributes: ["id", "title", "images"],
+            attributes: ["id", "title", "images", "calories"],
         });
 
         res.status(200).json({
@@ -88,10 +85,7 @@ module.exports = {
             data: data,
         })
     } catch (error) {
-      res.status(400).json({
-        status: "failed",
-        message: error.message,
-      });
+      next(error);
     }
   },
 

@@ -2,9 +2,9 @@ const Joi = require("joi");
 
 module.exports = {
     registerSchema: Joi.object({
-        email: Joi.string().email().requied(),
-        fullName: Joi.string().min(4).required(),
-        password: Joi.string().min(8).requied(),
+        email: Joi.string().email().required(),
+        fullName: Joi.string().min(2).required(),
+        password: Joi.string().min(8).required(),
     }),
     loginSchema: Joi.object({
         email: Joi.string().email().required(),

@@ -16,10 +16,6 @@ function createModelUser(Sequelize, DataTypes) {
       },
       fullName: {
         type: DataTypes.STRING,
-        allowNull: true,
-      },
-      name: {
-        type: DataTypes.STRING,
         allowNull: false,
       },
       email: {

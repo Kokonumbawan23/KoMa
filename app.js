@@ -4,7 +4,9 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-
+const error404Handler = require('./middleware/handler404NotFound');
+const error400CustomHandler = require('./middleware/customErrorHandler');
+const error500Handler = require('./middleware/handler500ServerError');
 var pushData = require('./app/pushData/route');
 var testGetData = require('./app/tesgetdata/route');
 var v1 = require("./routes/v1");
@@ -29,19 +31,22 @@ app.use('/getdata', testGetData);
 
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
-});
+// app.use(function(req, res, next) {
+//   next(createError(404));
+// });
+app.use(error400CustomHandler);
+app.use(error404Handler);
+app.use(error500Handler);
 
 // error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+// app.use(function(err, req, res, next) {
+//   // set locals, only providing error in development
+//   res.locals.message = err.message;
+//   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
+//   // render the error page
+//   res.status(err.status || 500);
+//   res.render('error');
+// });
 
 module.exports = app;

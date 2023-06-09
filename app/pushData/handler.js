@@ -15,7 +15,7 @@ const url = "https://low-carb-recipes.p.rapidapi.com";
 const options = {
   method: "GET",
   headers: {
-    "X-RapidAPI-Key": process.env.APIKEY,
+    "X-RapidAPI-Key": "050404b803msh7a974a0c65b3f74p19db88jsnca46213b9af8",
     "X-RapidAPI-Host": "low-carb-recipes.p.rapidapi.com",
   },
 };
@@ -52,6 +52,9 @@ module.exports = {
         options
       );
       const json = await getData.json();
+      if(json.message) {
+        throw new Error(json.message);
+      }
       const dataMap = json.map(async (element) => {
         const checkRecipe = await Recipe.findOne({
           where: {
@@ -75,6 +78,7 @@ module.exports = {
           body: element.description,
           instructions: element.steps[0],
           images: [element.image],
+          calories: element.nutrients.caloriesKCal
         });
        
 

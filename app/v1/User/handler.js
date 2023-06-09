@@ -1,13 +1,13 @@
+const { validateRegisterUserSchema } = require("../../../Validator/User");
 const { validateLoginUserSchema } = require("../../../Validator/User");
 const userServices = require("../../../services/mysql/userServices");
 
 
-const bcrypt = requier("bcrypt");
 
 module.exports = {
-    loginUser: async (req, res, next) => {
+    handlerLoginUser: async (req, res, next) => {
         try {
-            const { email, password } = req.body;
+        const { email, password } = req.body;
         validateLoginUserSchema({email, password});
         const user = await userServices.loginUser(email, password);
         res.status(200).json({
@@ -17,7 +17,21 @@ module.exports = {
     } catch(error) {
         next(error);
         }
-        
+    },
+    handlerRegisterUser: async (req, res, next) => {
+        try {
+            const { email, fullName, password } = req.body;
+            validateRegisterUserSchema({email, fullName, password});
+            const user = await userServices.registerUser(email, fullName, password);
+
+            res.status(201).json({
+                status: 'success',
+                message: "Successfully register user",
+                test: user,
+            });
+        } catch(error) {
+            next(error);
+        }
     }
 }
 

@@ -2,14 +2,14 @@
   "development": {
     "username": "postgres",
     "password": "root",
-    "database": "koma-dev",
+    "database": "koma-test",
     "host": "34.128.69.119",
     "dialect": "postgres"
   },
   "test": {
     "username": "postgres",
     "password": "root",
-    "database": "koma",
+    "database": "koma-test",
     "host": "34.128.69.119",
     "dialect": "postgres"
   },
@@ -21,3 +21,4 @@
     "dialect": "postgres"
   }
 }
+

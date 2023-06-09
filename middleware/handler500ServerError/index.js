@@ -1,6 +1,9 @@
-function error500ServerError(req, res, next){
-    res.status(500).json( {
-        status: 'error',
-        message: "Internal server error"
-    });
+function error500ServerError(error, req, res, next) {
+  console.log(error);
+  res.status(500).json({
+    status: "error",
+    message: "Internal server error",
+  });
 }
+
+module.exports = error500ServerError;
