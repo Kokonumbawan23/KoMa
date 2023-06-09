@@ -7,7 +7,7 @@ from google.cloud import storage
 from google.oauth2 import service_account
 
 # Setting up Google Cloud Credential
-credentials = service_account.Credentials.from_service_account_file('./credentials/capstone-koma-73d165c7c64e.json')
+credentials = service_account.Credentials.from_service_account_file('./credentials/ ## PLACE YOUR CREDENTIALS HERE ##')
 storage_client = storage.Client(credentials=credentials, project='Capstone-KoMa')
 bucket = storage_client.get_bucket('koma_ingredients_picture')
 
@@ -36,7 +36,6 @@ def classify():
         if request.method == 'POST':
             # check if the post request has the file part
             if 'file' not in request.files:
-                flash('No file part')
                 return {
                     "status" : "error",
                     "message" : 'No file part'
@@ -45,7 +44,6 @@ def classify():
             # If the user does not select a file, the browser submits an
             # empty file without a filename.
             if file.filename == '':
-                flash('No selected file')
                 return {
                     "status" : "error",
                     "message" : 'No selected file'
@@ -70,10 +68,11 @@ def classify():
                 "result": result
             }
     # catch error if something unexpected happened
-    except:
-        return {
-                "error": "Internal Server Error"
-            }
+    except Exception as e:
+        if hasattr(e,'message'):
+           print(e.message)
+        else:
+            print(e)
 
 # Function to predict the file ingredients
 def predict(picture):
