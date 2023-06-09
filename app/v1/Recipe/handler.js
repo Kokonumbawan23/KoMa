@@ -101,28 +101,12 @@ module.exports = {
         const data = await Recipe.findAll({
             order: Sequelize.literal('random()'),
             limit: 10,
-            // include: [
-            //     {
-            //         model: Ingredient,
-            //         as: "Ingredients",
-            //         attributes: [],
-            //         where: {
-            //             name: {
-            //                 [Op.like]: `%${ingredient}%`,
-            //             }
-            //         },
-            //         through: {
-            //             model: Tag,
-                        
-            //         }
-            //     }
-            // ],
             attributes: ["id", "title", "images"],
         });
 
         res.status(200).json({
             status: "success",
-            message: "Successfully get Recipe by Ingredient",
+            message: "Successfully get Recipe in Random Order",
             data: data,
         })
     } catch (error) {
