@@ -1,4 +1,4 @@
-const { Recipe, Ingredient, Tag, Unit } = require("../../../models");
+const { Recipe, Ingredient, Tag, Unit, Sequelize } = require("../../../models");
 const { Op } = require("sequelize");
 module.exports = {
   handlerGetDataById: async (req, res, next) => {
@@ -79,6 +79,44 @@ module.exports = {
                     }
                 }
             ],
+            attributes: ["id", "title", "images"],
+        });
+
+        res.status(200).json({
+            status: "success",
+            message: "Successfully get Recipe by Ingredient",
+            data: data,
+        })
+    } catch (error) {
+      res.status(400).json({
+        status: "failed",
+        message: error.message,
+      });
+    }
+  },
+
+  handlerGetRandomizedData: async (req, res, next) => {
+    try {
+
+        const data = await Recipe.findAll({
+            order: Sequelize.literal('random()'),
+            limit: 10,
+            // include: [
+            //     {
+            //         model: Ingredient,
+            //         as: "Ingredients",
+            //         attributes: [],
+            //         where: {
+            //             name: {
+            //                 [Op.like]: `%${ingredient}%`,
+            //             }
+            //         },
+            //         through: {
+            //             model: Tag,
+                        
+            //         }
+            //     }
+            // ],
             attributes: ["id", "title", "images"],
         });
 
