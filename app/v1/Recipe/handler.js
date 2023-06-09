@@ -95,7 +95,7 @@ module.exports = {
         const data = await Recipe.findAll({
             order: Sequelize.literal('random()'),
             limit: 10,
-            attributes: ["id", "title", "images"],
+            attributes: ["id", "title", "images", "calories"],
         });
 
         res.status(200).json({
