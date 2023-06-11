@@ -35,7 +35,10 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      gender: Sequelize.STRING,
+      gender: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
       // role: {
       //   type: Sequelize.INTEGER,
       //   references: {

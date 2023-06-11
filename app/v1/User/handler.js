@@ -58,6 +58,40 @@ module.exports = {
       next(error);
     }
   },
+  handlerUpdateProfileUser: async (req, res, next) => {
+    try {
+      const { fullName, height, weight, phoneNumber } = req.body;
+      const {uuid} = req.user;
+      const user = await userServices.updateProfile(
+        uuid,
+        fullName,
+        height,
+        weight,
+        phoneNumber
+      );
+
+      res.status(200).json({
+        status: 'success',
+        message: 'Successfully Update User',
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
+  handlerGetDetailUser: async (req, res, next) => {
+    try {
+      const {uuid} = req.user;
+      const user = await userServices.userByUUID(uuid);
+
+      res.status(200).json({
+        status: "sucess",
+        message: "Successfully get Detail User",
+        data: user,
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
   handlerGenerateResetPasswordOTP: async (req, res, next) => {
     try {
       const { email } = req.body;
