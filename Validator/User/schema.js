@@ -16,4 +16,8 @@ module.exports = {
         weight: Joi.number().required(),
         noHP: Joi.string().min(10).required(),
     }),   
+    changePassword: Joi.object({
+        oldPassword: Joi.string().min(8).required(),
+        newPassword: Joi.string().min(8).required(),
+    })
 }

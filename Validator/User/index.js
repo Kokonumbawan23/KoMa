@@ -1,4 +1,4 @@
-const { registerSchema, loginSchema } = require("./schema");
+const { registerSchema, loginSchema, changePassword } = require("./schema");
 
 function validateRegisterUserSchema(payload) {
     const validateResult = registerSchema.validate(payload);
@@ -22,4 +22,11 @@ function validateNewUserSchema(payload) {
     }
 }
 
-module.exports = { validateRegisterUserSchema, validateLoginUserSchema, validateNewUserSchema };
+function validateChangePasswordSchema(payload) {
+    const validateResult = changePassword.validate(payload);
+    if (validateResult.error) {
+        throw new Error(validateResult.error.message);
+    }
+}
+
+module.exports = { validateRegisterUserSchema, validateLoginUserSchema, validateNewUserSchema, validateChangePasswordSchema };
