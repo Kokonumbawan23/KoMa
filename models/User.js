@@ -29,7 +29,11 @@ function createModelUser(Sequelize, DataTypes) {
       },
       gender: {
         type: DataTypes.STRING,
+<<<<<<< HEAD
         allowNull: false,
+=======
+        allowNull: true,
+>>>>>>> 9f2d8e5e81f9e7a7006c88c9c7c94f9b6af0357f
       },
       // role: {
       //   type: DataTypes.INTEGER,

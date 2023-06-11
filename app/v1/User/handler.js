@@ -43,6 +43,7 @@ module.exports = {
       const { oldPassword, newPassword, confirmPassword } = req.body;
       const uuid = req.user.uuid;
       validateChangePasswordSchema({ oldPassword, newPassword });
+      validateChangePasswordSchema({ oldPassword, newPassword });
       const updatePassword = await userServices.changePassword(
         uuid,
         oldPassword,

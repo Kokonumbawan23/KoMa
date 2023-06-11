@@ -65,7 +65,7 @@ module.exports = {
         if (checkRecipe) {
           return;
         }
-
+        const newDescription = element.description.replace(/#/g,'');
         // const bufferImage = await downloadImage(element.image);    
 
         // const uploadedtoGCS = await pushSingleImageToStorage(bufferImage);
@@ -76,7 +76,7 @@ module.exports = {
 
         const recipe = await Recipe.create({
           title: element.name,
-          body: element.description,
+          body: newDescription,
           instructions: element.steps[0],
           images: [element.image],
           calories: element.nutrients.caloriesKCal
