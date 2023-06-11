@@ -1,4 +1,7 @@
-const { validateRegisterUserSchema, validateChangePasswordSchema } = require("../../../Validator/User");
+const {
+  validateRegisterUserSchema,
+  validateChangePasswordSchema,
+} = require("../../../Validator/User");
 const { validateLoginUserSchema } = require("../../../Validator/User");
 const userServices = require("../../../services/mysql/userServices");
 
@@ -35,7 +38,7 @@ module.exports = {
     try {
       const { oldPassword, newPassword, confirmPassword } = req.body;
       const uuid = req.user.uuid;
-        validateChangePasswordSchema({oldPassword, newPassword});
+      validateChangePasswordSchema({ oldPassword, newPassword });
       const updatePassword = await userServices.changePassword(
         uuid,
         oldPassword,
@@ -44,26 +47,45 @@ module.exports = {
       );
 
       res.status(200).json({
-        status: 'succes',
-        message: 'Successfully update Password',
-      })
+        status: "succes",
+        message: "Successfully update Password",
+      });
     } catch (error) {
       next(error);
     }
   },
   handlerUpdateProfileUser: async (req, res, next) => {
+    try {
+      const { fullName, height, weight, phoneNumber } = req.body;
+      const uuid = req.user.uuid;
+      const user = await userServices.updateProfile(
+        uuid,
+        fullName,
+        height,
+        weight,
+        phoneNumber
+      );
 
+      res.status(200).json({
+        status: 'success',
+        message: 'Successfully Update User',
+      });
+    } catch (error) {
+      next(error);
+    }
   },
   handlerGetDetailUser: async (req, res, next) => {
-    const uuid = req.user.uuid;
-    const user = await userServices.userByUUID(uuid);
+    try {
+      const uuid = req.user.uuid;
+      const user = await userServices.userByUUID(uuid);
 
-    res.status(200).json({
-      status: 'sucess',
-      message: 'Successfully get Detail User',
-      data: user,
-    });
-
-  }
-
+      res.status(200).json({
+        status: "sucess",
+        message: "Successfully get Detail User",
+        data: user,
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
 };
