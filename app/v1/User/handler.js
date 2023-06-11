@@ -51,4 +51,11 @@ module.exports = {
       next(error);
     }
   },
+  handlerUpdateProfileUser: async (req, res, next) => {
+
+  },
+  handlerGetDetailUser: async (req, res, next) => {
+    
+  }
+
 };
