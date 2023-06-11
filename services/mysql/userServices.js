@@ -58,10 +58,7 @@ const userServices = {
       throw new Error("User not found");
     }
 
-    const validatePassword = bcrypt.compareSync(
-      oldPassword,
-      user.password
-    );
+    const validatePassword = bcrypt.compareSync(oldPassword, user.password);
     if (!validatePassword) {
       throw new Error("Wrong Password");
     }
@@ -75,6 +72,45 @@ const userServices = {
     });
 
     return user;
+  },
+  updateProfile: async (uuid, fullName, height, weight, phoneNumber) => {
+    const user = await User.findOne({
+      where: {
+        uuid,
+      },
+    });
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    await user.update({
+      fullName: fullName,
+      height: height,
+      weight: weight,
+      phoneNumber: phoneNumber,
+    });
+  },
+  userByUUID: async (uuid) => {
+    const user = await User.findOne({
+      where: {
+        uuid,
+      },
+    });
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    return {
+      fullName: user.fullName,
+      email: user.email,
+      gender: user.gender,
+      height: user.height,
+      weight: user.weight,
+      calories: user.calories,
+      photoProfile: user.photoProfile,
+      phoneNumber: user.phoneNumber,
+    };
   },
 };
 
