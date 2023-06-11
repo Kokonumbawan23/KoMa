@@ -55,7 +55,15 @@ module.exports = {
 
   },
   handlerGetDetailUser: async (req, res, next) => {
-    
+    const uuid = req.user.uuid;
+    const user = await userServices.userByUUID(uuid);
+
+    res.status(200).json({
+      status: 'sucess',
+      message: 'Successfully get Detail User',
+      data: user,
+    });
+
   }
 
 };

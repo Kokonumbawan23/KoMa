@@ -90,7 +90,7 @@ const userServices = {
       phoneNumber: phoneNumber,
     });
   },
-  userById: async (uuid) => {
+  userByUUID: async (uuid) => {
     const user = await User.findOne({
       where: {
         uuid,
