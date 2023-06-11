@@ -11,6 +11,7 @@ var pushData = require('./app/pushData/route');
 var testGetData = require('./app/tesgetdata/route');
 var v1 = require("./routes/v1");
 var app = express();
+
 require('dotenv').config({path: __dirname+ '/.env'});
 
 // view engine setup

@@ -1,6 +1,13 @@
-const { validateRegisterUserSchema, validateChangePasswordSchema } = require("../../../Validator/User");
+require('dotenv').config({path: __dirname+ '/../../../.env'});
+
+const {
+  validateRegisterUserSchema,
+  validateChangePasswordSchema,
+} = require("../../../Validator/User");
 const { validateLoginUserSchema } = require("../../../Validator/User");
 const userServices = require("../../../services/mysql/userServices");
+const CryptoJS = require('crypto-js')
+const AES = require('crypto-js/aes')
 
 module.exports = {
   handlerLoginUser: async (req, res, next) => {
@@ -18,9 +25,9 @@ module.exports = {
   },
   handlerRegisterUser: async (req, res, next) => {
     try {
-      const { email, fullName, password } = req.body;
+      const { email, fullName, password, gender } = req.body;
       validateRegisterUserSchema({ email, fullName, password });
-      const user = await userServices.registerUser(email, fullName, password);
+      const user = await userServices.registerUser(email, fullName, password, gender);
 
       res.status(201).json({
         status: "success",
@@ -35,7 +42,7 @@ module.exports = {
     try {
       const { oldPassword, newPassword, confirmPassword } = req.body;
       const uuid = req.user.uuid;
-        validateChangePasswordSchema({oldPassword, newPassword});
+      validateChangePasswordSchema({ oldPassword, newPassword });
       const updatePassword = await userServices.changePassword(
         uuid,
         oldPassword,
@@ -44,11 +51,63 @@ module.exports = {
       );
 
       res.status(200).json({
-        status: 'succes',
-        message: 'Successfully update Password',
-      })
+        status: "succes",
+        message: "Successfully update Password",
+      });
     } catch (error) {
       next(error);
     }
   },
+  handlerGenerateResetPasswordOTP: async (req, res, next) => {
+    try {
+      const { email } = req.body;
+      console.log(email)
+
+      const resOtp = await userServices.generateResetPasswordOTP(email);
+
+      res.status(200).json({
+        status: "success",
+        message: "Email sended",
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
+  handlerVerifyResetPasswordOTP: async (req,res,next) => {
+    try {
+        const {otp} = req.body;
+
+        const verifiedOtpUuid = await userServices.verifyResetPasswordOTP(otp);
+
+        const encryptedUuid = AES.encrypt(verifiedOtpUuid,process.env.AES_ENCRYPT_KEY).toString();
+
+        res.status(200).json({
+            status: "success",
+            message: "Otp verified",
+            key: encryptedUuid
+        });
+
+    } catch (error) {
+        next(error)
+    }
+  },
+  handlerGenerateNewResetPassword: async (req,res,next) => {
+    try {
+        const {encryptKey, password, confirmPassword} = req.body;
+
+        const decryptedKey = AES.decrypt(encryptKey,process.env.AES_ENCRYPT_KEY).toString(CryptoJS.enc.Utf8);
+
+        console.log(decryptedKey)
+
+        const newPassword = await userServices.generateNewResetPassword(decryptedKey, password, confirmPassword);
+
+        res.status(200).json({
+            status: "success",
+            message: "success update user password"
+        });    
+
+    } catch (error) {
+        next(error)
+    }
+  }
 };

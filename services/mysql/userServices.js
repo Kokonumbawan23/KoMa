@@ -1,6 +1,8 @@
-const { User } = require("../../models");
+const { User, ResetPassword } = require("../../models");
 const bcrypt = require("bcrypt");
 const generateAccessToken = require("../../utils/generateAccessToken");
+const {generateOTP} = require("../../utils/generateOTP");
+const {sendMail} = require("../../utils/MailSender");
 
 const userServices = {
   loginUser: async (email, password) => {
@@ -22,7 +24,7 @@ const userServices = {
     const accessToken = generateAccessToken({ uuid: userLogin.uuid });
     return accessToken;
   },
-  registerUser: async (email, fullName, password) => {
+  registerUser: async (email, fullName, password, gender) => {
     console.log(password);
     const hashPw = await bcrypt.hash(password, 10);
     const [user, created] = await User.findOrCreate({
@@ -33,6 +35,7 @@ const userServices = {
         email: email,
         fullName: fullName,
         password: hashPw,
+        gender
       },
     });
 
@@ -76,6 +79,77 @@ const userServices = {
 
     return user;
   },
+
+  generateResetPasswordOTP: async (email)=>{
+    const user = await User.findOne({
+      where: {
+        email,
+      },
+    });
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    const otp = generateOTP();
+    
+    const resOtp = await ResetPassword.create({
+        otp,
+        id_user: user.id
+    })
+
+    await sendMail({
+      to: email,
+      OTP: otp
+    })
+
+    return resOtp;
+  },
+
+  verifyResetPasswordOTP: async (otp) => {
+
+    const resOtp = await ResetPassword.findOne({
+      where: {
+        otp
+      },
+      include: [
+        {
+          model: User,
+          attributes: ["uuid"]
+        }
+      ],
+    });
+
+    if(!resOtp){
+      throw new Error("Otp not found")
+    }
+    const dataJSON = resOtp.toJSON();
+    
+    return dataJSON.User.uuid;
+  },
+  
+  generateNewResetPassword : async (uuid, newPassword, confirmPassword) => {
+    const user = await User.findOne({
+      where: {
+        uuid,
+      },
+    });
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    if (newPassword !== confirmPassword) {
+      throw new Error("Confirm Password is not same");
+    }
+
+    await user.update({
+      password: await bcrypt.hash(newPassword, 10),
+    });
+
+    return user;
+  }
+
 };
 
 module.exports = userServices;

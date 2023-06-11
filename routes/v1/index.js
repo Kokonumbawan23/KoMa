@@ -1,6 +1,6 @@
 const express = require("express");
 const { handlerGetDataById, handlerGetDataByIngredient, handlerGetRandomizedData } = require("../../app/v1/Recipe/handler");
-const { handlerRegisterUser, handlerLoginUser, handlerUpdatePassword } = require("../../app/v1/User/handler");
+const { handlerRegisterUser, handlerLoginUser, handlerUpdatePassword, handlerGenerateResetPasswordOTP,handlerVerifyResetPasswordOTP, handlerGenerateNewResetPassword } = require("../../app/v1/User/handler");
 const authenticationToken = require("../../middleware/authenticationToken");
 
 
@@ -12,6 +12,9 @@ router.post("/auth/login", handlerLoginUser);
 
 
 router.post("/user/changepassword", authenticationToken, handlerUpdatePassword);
+router.post("/user/otpgen", handlerGenerateResetPasswordOTP);
+router.post("/user/otpver", handlerVerifyResetPasswordOTP);
+router.post("/user/resetpassword", handlerGenerateNewResetPassword);
 
 
 router.get("/recipe/random", handlerGetRandomizedData);
