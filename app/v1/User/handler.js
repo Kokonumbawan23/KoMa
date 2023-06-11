@@ -22,7 +22,7 @@ module.exports = {
         try {
             const { email, fullName, password } = req.body;
             validateRegisterUserSchema({email, fullName, password});
-            const user = await userServices.registerUser(email, fullName, password);
+            const user = await userServices.registerUser(email, password, fullName);
 
             res.status(201).json({
                 status: 'success',
