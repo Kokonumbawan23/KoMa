@@ -102,7 +102,6 @@ module.exports = {
         res.status(200).json({
             status: "success",
             message: "Successfully get Recipe in Random Order",
-            predict: ingredient,
             data: data,
         })
     } catch (error) {
