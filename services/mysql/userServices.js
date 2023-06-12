@@ -3,6 +3,7 @@ const bcrypt = require("bcrypt");
 const generateAccessToken = require("../../utils/generateAccessToken");
 const {generateOTP} = require("../../utils/generateOTP");
 const {sendMail} = require("../../utils/MailSender");
+const { deleteSingleImage } = require("../../utils/uploadToGCS");
 
 const userServices = {
   loginUser: async (email, password) => {
@@ -104,6 +105,26 @@ const userServices = {
       phoneNumber: phoneNumber,
       calories: calories,
     });
+  },
+  updatePhotoProfile: async (uuid, image=null) => {
+    const user = await User.findOne({
+      where: {
+        uuid
+      }
+    });
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+
+    if (user.photoProfile) {
+      deleteSingleImage(user.photoProfile);
+    }
+    user.update({
+      photoProfile: image,
+    });
+    return user;
+
   },
   userByUUID: async (uuid) => {
     const user = await User.findOne({

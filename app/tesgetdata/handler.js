@@ -6,7 +6,6 @@ module.exports = {
     try {
       const arrayIdRecipe = [];
       const { ingredient } = req.query;
-      console.log(ingredient);
       //   const dataIngredient = await Ingredient.findOne({
       //     where: {
       //       name: {

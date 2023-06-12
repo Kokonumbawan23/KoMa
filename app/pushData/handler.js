@@ -7,7 +7,7 @@ const fetch = (...args) =>
 // const { pipeline } = require('node:stream/promises');
 // const axios = require('axios');
 // const uploadImage = require("../../utils/multer");
-// const { pushSingleImageToStorage } = require("../../utils/uploadToGCS");
+const { pushSingleImageToStorage } = require("../../utils/uploadToGCS");
 const { Recipe, Ingredient, Tag, Unit } = require("../../models");
 require('dotenv').config({path: __dirname+ '/../../.env'});
 
@@ -66,19 +66,20 @@ module.exports = {
           return;
         }
         const newDescription = element.description.replace(/#/g,'');
-        // const bufferImage = await downloadImage(element.image);    
-
-        // const uploadedtoGCS = await pushSingleImageToStorage(bufferImage);
-        // console.log("Upload: " +uploadedtoGCS);
-        // const imageArr = [uploadedtoGCS];
-        // console.log(element.image);
+        //const bufferImage = await downloadImage(element.image);    
+        const response = await fetch(element.image);
+        const bufferImage = await response.buffer();
+        const uploadedtoGCS = await pushSingleImageToStorage(bufferImage);
+        
+        
+        
 
 
         const recipe = await Recipe.create({
           title: element.name,
           body: newDescription,
           instructions: element.steps[0],
-          images: [element.image],
+          images: [uploadedtoGCS],
           calories: element.nutrients.caloriesKCal
         });
        
