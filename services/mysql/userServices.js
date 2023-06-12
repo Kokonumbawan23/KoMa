@@ -77,6 +77,8 @@ const userServices = {
     return user;
   },
   updateProfile: async (uuid, fullName, height, weight, phoneNumber) => {
+    var multiplier;
+    var valueGender;
     const user = await User.findOne({
       where: {
         uuid,
@@ -85,12 +87,22 @@ const userServices = {
     if (!user) {
       throw new Error("User not found");
     }
+    console.log(user.gender.toLowerCase());
+    if (user.gender.toLowerCase() == 'male') {
+      multiplier = 1;
+      valueGender = 1;
+    } else {
+      multiplier = 0.95;
+      valueGender = 0.9;
+    }
 
+    const calories = weight * valueGender * 24 * multiplier;
     await user.update({
       fullName: fullName,
       height: height,
       weight: weight,
       phoneNumber: phoneNumber,
+      calories: calories,
     });
   },
   userByUUID: async (uuid) => {
