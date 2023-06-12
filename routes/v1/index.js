@@ -16,7 +16,7 @@ router.post("/user/otpgen", handlerGenerateResetPasswordOTP);
 router.post("/user/otpver", handlerVerifyResetPasswordOTP);
 router.post("/user/resetpassword", handlerGenerateNewResetPassword);
 
-router.post("/user/detail", authenticationToken, handlerGetDetailUser);
+router.get("/user/detail", authenticationToken, handlerGetDetailUser);
 router.post("/user/detail/update", authenticationToken, handlerUpdateProfileUser);
 
 

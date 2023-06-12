@@ -61,10 +61,7 @@ const userServices = {
       throw new Error("User not found");
     }
 
-    const validatePassword = bcrypt.compareSync(
-      oldPassword,
-      user.password
-    );
+    const validatePassword = bcrypt.compareSync(oldPassword, user.password);
     if (!validatePassword) {
       throw new Error("Wrong Password");
     }
@@ -78,6 +75,57 @@ const userServices = {
     });
 
     return user;
+  },
+  updateProfile: async (uuid, fullName, height, weight, phoneNumber) => {
+    var multiplier;
+    var valueGender;
+    const user = await User.findOne({
+      where: {
+        uuid,
+      },
+    });
+    if (!user) {
+      throw new Error("User not found");
+    }
+    console.log(user.gender.toLowerCase());
+    if (user.gender.toLowerCase() == 'male') {
+      multiplier = 1;
+      valueGender = 1;
+    } else {
+      multiplier = 0.95;
+      valueGender = 0.9;
+    }
+
+    const calories = weight * valueGender * 24 * multiplier;
+    await user.update({
+      fullName: fullName,
+      height: height,
+      weight: weight,
+      phoneNumber: phoneNumber,
+      calories: calories,
+    });
+  },
+  userByUUID: async (uuid) => {
+    const user = await User.findOne({
+      where: {
+        uuid,
+      },
+    });
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    return {
+      fullName: user.fullName,
+      email: user.email,
+      gender: user.gender,
+      height: user.height,
+      weight: user.weight,
+      calories: user.calories,
+      photoProfile: user.photoProfile,
+      phoneNumber: user.phoneNumber,
+    };
   },
 
   generateResetPasswordOTP: async (email)=>{
