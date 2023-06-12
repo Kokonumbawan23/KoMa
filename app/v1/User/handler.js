@@ -144,5 +144,35 @@ module.exports = {
     } catch (error) {
         next(error)
     }
+  },
+  handlerUpdatePhotoProfile: async (req, res, next) => {
+    try {
+      const image = req.publicUrl;
+      const { uuid } = req.user;
+      if (!image) {
+        throw new Error("Image is required");
+      }
+      const user = await userServices.updatePhotoProfile(uuid, image);
+
+      res.status(201).json({
+        status: 'success',
+        message: "Successfully Change Photo Profile",
+      });
+
+    } catch(error) {
+      next(error);
+    }
+  }, 
+  handlerDeleteImageProfile: async (req, res, next) => {
+    try {
+      const { uuid } = req.user;
+      const user = await userServices.updatePhotoProfile(uuid);
+      res.status(200).json({
+        status: 'success',
+        message: "Successfully delete Photo",
+      });
+    } catch (error) {
+      next(error);
+    }
   }
 };

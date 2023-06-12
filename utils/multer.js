@@ -1,5 +1,5 @@
 const Multer = require("multer");
-const typeImage = ["png", "jpg", "jpeg"];
+const typeImage = ["image/png", "image/jpg", "image/jpeg"];
 
 const multer = Multer({
   storage: Multer.memoryStorage(),
