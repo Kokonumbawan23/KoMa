@@ -32,7 +32,6 @@ module.exports = {
       res.status(201).json({
         status: "success",
         message: "Successfully register user",
-        test: user,
       });
     } catch (error) {
       next(error);

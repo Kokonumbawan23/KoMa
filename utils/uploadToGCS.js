@@ -3,23 +3,6 @@ const { Storage } = require("@google-cloud/storage");
 // const pathKey = path.resolve("./credentials.json");
 require("dotenv").config({ path: __dirname + "/../.env" });
 
-// const storage = new Storage({
-//   projectId: process.env.PROJECTID,
-//   credentials: {
-//     type: process.env.type,
-//     project_id: process.env.project_id,
-//     private_key_id: process.env.private_key_id,
-//     private_key: process.env.private_key.split(String.raw`\n`).join('\n'),
-//     client_email: process.env.client_email,
-//     client_id: process.env.client_id,
-//     auth_uri: 'https://accounts.google.com/o/oauth2/auth',
-//     token_uri: 'https://oauth2.googleapis.com/token',
-//     auth_provider_x509_cert_url: 'https://www.googleapis.com/oauth2/v1/certs',
-//     client_x509_cert_url: process.env.client_x09_cert_url,
-//   }
-// });
-
-
 const storage = new Storage({
     projectId: process.env.PROJECTID,
     credentials: {
@@ -27,7 +10,7 @@ const storage = new Storage({
       project_id: process.env.project_id,
       private_key_id: process.env.private_key_id,
       private_key: Buffer.from(process.env.private_key, 'base64').toString('utf8'),
-      client_email:"cloud-storage-create@capstone-koma.iam.gserviceaccount.com",
+      client_email: process.env.client_email,
       client_id: process.env.client_id,
       auth_uri: 'https://accounts.google.com/o/oauth2/auth',
       token_uri: 'https://oauth2.googleapis.com/token',
