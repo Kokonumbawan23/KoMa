@@ -134,10 +134,7 @@ module.exports = {
         recipe: dataResult,
       });
     } catch (error) {
-      res.status(404).json({
-        status: "failed",
-        message: error.message,
-      });
+      next(error);
     }
   },
 };
