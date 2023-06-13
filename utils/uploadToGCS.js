@@ -18,12 +18,8 @@ require("dotenv").config({ path: __dirname + "/../.env" });
 //     client_x509_cert_url: process.env.client_x09_cert_url,
 //   }
 // });
-// const text = "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDEzUpeOy9wN8OT\n1trjaqc/iQzSr/T5qSrG4IoGHPh5dNsGDaVnnkITP+7W3PAAoSxF5arw/adgDK9T\nHJ+waA7io2L16vXuacPEkSZzQQsKztPyZ57Z8OntjCOB1oftphdsfIdMdgFIdXMu\nZOuitzIALDaYivbHjAGZ4hc2+brnkwvXS4n8Ojhyz8kfvkNelTHS9JcpBKXJD/+b\nOLsX+ywnaqkRVZh6BdM6erCZswRQvZB+zE3JEhov//JKAFY33j0Nw/gPT4rJ8/wt\nFSXcwbljn2FcN32vfhsxjkWftTqY17GclzCqi1F5geIWdxq6tBgiYytntFfYeHh0\n1t1ott/5AgMBAAECggEAEifWOoc/Qx0B3/usSdqm/0eHdVBiSz3+AkbotNOrYJkV\nM6PCpKKG+ful7xCG26gCy5f6gy0DaesBqas0WDPhW6szD/jTI2GCe/ngEDXp7N9T\n0kMY9oYxLocFJ49BDv2Jn6qFWNpyF9st+xO4YVSBOl7Z0ozPY21ZIHcpKRs00PQo\nb/a84Zf6ET7gqU5VwdOJk/gCtFbEQ7EW2b1vwu8k7rUNe4Q/JrpW4GPCZDHP5FaQ\n43OjPEw3TjtCogUGloCI+AnPVPGZ24jFNeDjK5KwqIivs/Po3USqdSfyXSE8LkC0\nbqNtb9or1FZUE9aCwt+48tcm8Tq3BxtRMpwpATf24QKBgQDmOHPmgDzofKWwMEeX\nlpR57h7WKH0EYaOVzjQzkGr7dUtA7LbAvGyMz1x4oFwCk4XjW1+gZI2354dvWM3z\nY2coQgJRkO3bBXF1WjYoK1xBWje0w++Q6l0Se4hU3B18edMEW6bflWo0cmuehdl+\nbA9axn7EnCMHxAwBictEy95NBQKBgQDa1tp7aitlFLIE8TMh/lCvckZa8WTMvirY\nR0oTfyQjk3e5amlg+OYvWn43ox9zS0xJjJRzIfqI9vsOyT2J46km5N/oxPf3iBqA\nyJ7BjDnYx2EPDi14BoZpmN/wCn2FENaqEEBXCnnKhhs+I1kpFAWKhlCNZR1I46GM\nblUz8xkZZQKBgQCe23luJjLhIZGa/9WGzkrpz9vLXujVKyKb7kurAQ4xMYCZ7j00\nxVAJ4dQnEFAtHuqWNajInloD+mlD9f024vJ9nv7GlcDrDth5Z6RTF4hzN/OUcldO\noclTRZaPJ8vY5p8rNKrzQMCmLAYCvs2TJLF7q9gxhqPNagP208RFVn+wmQKBgFv2\n0GfuzP+0e78x8ZAGhLfGKSTMrtSP0geDpfCdjH1a2oRT4Kb80hbyS3psFapo6U07\nQ6NCkzt9tzGWhkLtJkePBT2XkLE4RBL8vCKQIDsmRnaCOb9n1pKHyQviDK+fzOY4\n4CDz6Qyf4NDzH+PwYwe8vBs/c9gOuPP/5dRoA5M1AoGAS85b0X7lm+BsE3DG42/r\nxGF9o9yhfK8XXFvlSvOhkP+kEmYYnT5jnIQlYum+ITu+2PcOt/VEuJE9lpZ4BOkU\nYVtPI7PyLVlzvBWYkYOoriGce2uvSfBWG6WKRVledHzvFVgpuSfRgngGRoRba0WJ\nKWXF7nIDT6KV6cB42vPwXGs=\n-----END PRIVATE KEY-----\n"
-// const encoded = Buffer.from(text, 'utf8').toString('base64')
-// console.log(encoded)
-// const valueStorage = Buffer.from(process.env.encode, 'base64').toString('utf8')
-// console.log(valueStorage)
-// console.log(process.env.encode.toString('ascii'));
+
+
 const storage = new Storage({
     projectId: process.env.PROJECTID,
     credentials: {
