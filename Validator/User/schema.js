@@ -20,5 +20,9 @@ module.exports = {
         oldPassword: Joi.string().min(8).required(),
         newPassword: Joi.string().min(8).required(),
     }),
+    resetPassword: Joi.object({
+        password: Joi.string().min(8).required(),
+        confirmPassword: Joi.string().min(8).required(),
+    })
 
 }

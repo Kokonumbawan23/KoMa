@@ -3,6 +3,7 @@ require('dotenv').config({path: __dirname+ '/../../../.env'});
 const {
   validateRegisterUserSchema,
   validateChangePasswordSchema,
+  validateResetPasswordSchema,
 } = require("../../../Validator/User");
 const { validateLoginUserSchema } = require("../../../Validator/User");
 const userServices = require("../../../services/mysql/userServices");
@@ -110,15 +111,18 @@ module.exports = {
   handlerVerifyResetPasswordOTP: async (req,res,next) => {
     try {
         const {otp} = req.body;
-
+        let regex = /\//g
         const verifiedOtpUuid = await userServices.verifyResetPasswordOTP(otp);
 
         const encryptedUuid = AES.encrypt(verifiedOtpUuid,process.env.AES_ENCRYPT_KEY).toString();
+        const fixedUuid =  encryptedUuid.replace(new RegExp(regex), '{slash}');
 
+        await userServices.deleteOTP(otp, verifiedOtpUuid)
+        
         res.status(200).json({
             status: "success",
             message: "Otp verified",
-            key: encryptedUuid
+            key: fixedUuid
         });
 
     } catch (error) {
@@ -129,9 +133,13 @@ module.exports = {
     try {
         const {encryptKey, password, confirmPassword} = req.body;
 
-        const decryptedKey = AES.decrypt(encryptKey,process.env.AES_ENCRYPT_KEY).toString(CryptoJS.enc.Utf8);
+        validateResetPasswordSchema({password, confirmPassword});
 
-        console.log(decryptedKey)
+        let regex = /{slash}/g
+        const reformedEncryptKey = encryptKey.replace(new RegExp(regex), '/');
+        console.log(reformedEncryptKey);
+        const decryptedKey = AES.decrypt(reformedEncryptKey,process.env.AES_ENCRYPT_KEY).toString(CryptoJS.enc.Utf8);
+
 
         const newPassword = await userServices.generateNewResetPassword(decryptedKey, password, confirmPassword);
 
