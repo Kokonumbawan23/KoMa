@@ -18,5 +18,7 @@ Base Network API : https://koma-detection-pbqp4lpcmq-as.a.run.app
   * result : String
 
   Example:
+
+  !['/' api example](image.png "'/ prediction api example'")
   
   
