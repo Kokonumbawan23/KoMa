@@ -1,6 +1,10 @@
 # KoMa Back End API
 
-Base Network: koma-backend-pbqp4lpcmq-as.a.run.app
+Base Network API : https://koma-backend-pbqp4lpcmq-as.a.run.app
+
+## Postman Documentation
+
+[API Documentation](https://documenter.getpostman.com/view/25897371/2s93sW9vTF)
 
 ## Routes
 
