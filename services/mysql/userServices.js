@@ -217,6 +217,28 @@ const userServices = {
     });
 
     return user;
+  },
+
+  deleteOTP : async (otp, uuid) => {
+
+    const user = await User.findOne({
+      where: {
+        uuid
+      }
+    });
+
+    const resOtp = await ResetPassword.destroy({
+      where: {
+        otp,
+        id_user: user.id
+      },
+    });
+
+    if(!resOtp){
+      throw new Error("Otp not found")
+    }
+
+    return true;
   }
 
 };
