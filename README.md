@@ -6,6 +6,10 @@ Base Network API : https://koma-backend-pbqp4lpcmq-as.a.run.app
 
 [API Documentation](https://documenter.getpostman.com/view/25897371/2s93sW9vTF)
 
+## Third Party API
+
+[Low Carb Recipes](https://rapidapi.com/dfskGT/api/low-carb-recipes/)
+
 ## Routes
 
 ## Recipes 
