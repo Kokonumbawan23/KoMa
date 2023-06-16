@@ -23,7 +23,6 @@ class ResultViewModel(private val mainRepository: MainRepository) : ViewModel() 
             _postPhotoLiveData.value = runBlocking { result.await() }
         }
     }
-
     private val _resultLiveData = MutableLiveData<UiState<RecipeByIngredientsResponse>>()
     val resultLiveData: LiveData<UiState<RecipeByIngredientsResponse>> get() = _resultLiveData
     fun getRecipeByIngredient(ingredient: String) {

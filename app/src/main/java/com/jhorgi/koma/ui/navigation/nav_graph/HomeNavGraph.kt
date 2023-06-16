@@ -100,8 +100,6 @@ fun NavGraphBuilder.homeNavGraph(
                 navArgument("phonenum") {
                     type = NavType.StringType
                 },
-
-
                 )
         ) {
             val name = it.arguments?.getString("name")
@@ -113,9 +111,15 @@ fun NavGraphBuilder.homeNavGraph(
                 name.toString(),
                 height.toString(),
                 weight.toString(),
-                phonenum.toString()
+                phonenum.toString(),
+                navigateToProfile = {
+                    navController.navigate(Screen.Profile.route) {
+                        popUpTo(Screen.Profile.route) {
+                            inclusive = true
+                        }
+                    }
+                }
             )
-
         }
 
         composable(Screen.Camera.route) {
@@ -143,7 +147,6 @@ fun NavGraphBuilder.homeNavGraph(
                 }
             )
         }
-
 
         composable(
             route = Screen.Detail.route,

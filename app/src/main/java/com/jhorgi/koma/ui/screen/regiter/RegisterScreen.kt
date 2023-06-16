@@ -60,7 +60,6 @@ fun RegisterScreen(
                 .fillMaxWidth()
                 .padding(top = 20.dp, bottom = 20.dp)
         )
-
         //Input Field
         InputRegisterField(navigateToLogin)
         Spacer(modifier = Modifier.height(15.dp))
@@ -89,9 +88,7 @@ fun RegisterScreen(
             )
         }
         Spacer(modifier = Modifier.height(20.dp))
-
     }
-
 }
 
 
@@ -217,7 +214,6 @@ private fun InputRegisterField(
                 )
             }
             Spacer(modifier = Modifier.height(8.dp))
-
             //Password Input
             TextFieldLabel(text = "Password")
             TextField(
@@ -359,6 +355,7 @@ private fun InputRegisterField(
             //Button Login
             Button(
                 onClick = {
+
                     isNameValid = nameInput.length < 2
                     isEmailValid = !Patterns.EMAIL_ADDRESS.matcher(email).matches()
 
@@ -401,14 +398,13 @@ private fun InputRegisterField(
                     navigateToLogin()
                     isButtonClicked = false
                 }
+
                 is UiState.Error -> {
                     isButtonClicked = false
                     Toast.makeText(LocalContext.current, "Error", Toast.LENGTH_SHORT).show()
                 }
             }
-
             LaunchedEffect(Unit) {
-
                 viewModel.register(RegisterRequestBody(email, passwordInput, nameInput, genderInput))
             }
         }

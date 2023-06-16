@@ -104,6 +104,11 @@ fun ProfileScreen(
                 textIsi(icon = ImageVector.vectorResource(id = R.drawable.atsign), name = response.data?.email.toString())
                 Spacer(modifier = Modifier.height(15.dp))
 
+                Label(text = "Phone")
+                Spacer(modifier = Modifier.height(5.dp))
+                textIsi(icon = ImageVector.vectorResource(id = R.drawable.phone), name = response.data?.phoneNumber.toString())
+                Spacer(modifier = Modifier.height(15.dp))
+
                 Label(text = "Height")
                 Spacer(modifier = Modifier.height(5.dp))
                 if(response.data?.height==null){

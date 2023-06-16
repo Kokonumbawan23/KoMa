@@ -39,6 +39,8 @@ fun EditProfileScreen(
             Injection.provideRepository(context = LocalContext.current)
         )
     ),
+    navigateToProfile : () -> Unit
+
 ) {
 
 
@@ -164,6 +166,7 @@ fun EditProfileScreen(
                 }
                 is UiState.Success -> {
                     val response = (editProfileLiveData as UiState.Success<GenericResponse>).data
+                    navigateToProfile()
                     Toast.makeText(context, response.message, Toast.LENGTH_SHORT).show()
                     isButtonClicked = false
                 }

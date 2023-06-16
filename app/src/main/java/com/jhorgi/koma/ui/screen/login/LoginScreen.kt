@@ -220,7 +220,7 @@ private fun inputLoginField(
 
         if (isPasswordValid) {
             Text(
-                text = "Password should contain minimum 6 character",
+                text = "Password should contain minimum 8 character",
                 color = MaterialTheme.colors.error,
                 style = MaterialTheme.typography.caption.copy(
                     fontWeight = FontWeight.Normal
@@ -252,7 +252,7 @@ private fun inputLoginField(
             onClick = {
                 isEmailValid = !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
 
-                isPasswordValid = passwordInput.length <= 8
+                isPasswordValid = passwordInput.length < 8
 
                 if (!isEmailValid && !isPasswordValid) {
                     isButtonClicked = true
