@@ -26,8 +26,8 @@ app.use(cookieParser());
 
 
 app.use('/api/v1', v1);
-app.use('/fetchdata', pushData);
-app.use('/getdata', testGetData);
+// app.use('/fetchdata', pushData);
+// app.use('/getdata', testGetData);
 
 
 app.use(error400CustomHandler);
